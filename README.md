@@ -110,3 +110,41 @@ Gráfica guardada en: 4_outputs\1_figures\01_eda_overview.png
 ✅ EDA completado.
 
 ```
+
+
+---
+## 🔒 Reporte de Anonimización
+```
+============================================================
+REPORTE DE ANONIMIZACIÓN
+============================================================
+
+Filas cargadas : 10,300
+Columnas antes de la anonimización: ['customer_id', 'nombre', 'email', 'telefono', 'fecha_registro', 'antiguedad_dias', 'ciudad', 'tipo_cliente', 'canal_principal', 'tiene_contrato', 'num_envios_6m', 'valor_total_6m', 'ticket_promedio', 'dias_ultimo_envio', 'num_reclamos_6m', 'tasa_entrega_exitosa', 'nps_score', 'churn']
+
+── Variables PII identificadas ────────────────────────────
+  ✖ nombre          → será eliminada
+  ✖ email           → será eliminada
+  ✖ telefono        → será eliminada
+  ⚙ customer_id     → será hasheada (SHA-256)
+
+── Muestra de customer_id hasheado ────────────────────────
+0    eba190fb9ed9cc38
+1    4ac66c326fa997c5
+2    d82c91ffabf02a54
+3    90867e0226bd9f39
+4    ec8f73f35fe3a31f
+
+── Columnas después de anonimización ──────────────────────
+['customer_id', 'fecha_registro', 'antiguedad_dias', 'ciudad', 'tipo_cliente', 'canal_principal', 'tiene_contrato', 'num_envios_6m', 'valor_total_6m', 'ticket_promedio', 'dias_ultimo_envio', 'num_reclamos_6m', 'tasa_entrega_exitosa', 'nps_score', 'churn']
+
+Columnas eliminadas : ['nombre', 'email', 'telefono']
+Columnas restantes  : 15
+Filas conservadas   : 10,300
+
+── Verificación PII ───────────────────────────────────────
+  ✅ Ninguna columna PII presente en el dataset.
+
+Dataset anonimizado guardado en: 1_data\2_cleaned\02_anonymized.csv
+
+```

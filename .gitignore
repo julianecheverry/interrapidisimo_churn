@@ -15,7 +15,7 @@ build/
 
 # Jupyter
 .ipynb_checkpoints/
-*.ipynb
+# *.ipynb
 
 # Datos sensibles
 # data/raw/*.csv

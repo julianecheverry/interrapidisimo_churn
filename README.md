@@ -457,3 +457,57 @@ Gráfica guardada en: 4_outputs\1_figures\02_model_evaluation.png
   Verificación predict() desde .pkl: [0 0 0 1 0]
 
 ```
+
+
+---
+## 🔍 Reporte valores SHAP (SHapley Additive exPlanations)
+```
+============================================================
+REPORTE DE ANÁLISIS VALORES SHAP (SHapley Additive exPlanations)
+============================================================
+
+Pipeline cargado desde: 1_data\3_features\pipeline.pkl
+
+Features tras preprocesamiento : 27
+  Categóricas (OHE) : 18
+  Numéricas         : 9
+
+Mejores parámetros:
+  C           : 1
+  l1_ratio    : 0.9
+
+SHAP values calculados sobre muestra de 1.000 filas
+
+── Top 15 variables por importancia SHAP ──────────────────
+                         feature  mean_shap
+0                num_reclamos_6m   0.568656
+1                      nps_score   0.441735
+2                  num_envios_6m   0.427061
+3              dias_ultimo_envio   0.421765
+4           tasa_entrega_exitosa   0.335237
+5               tiene_contrato_1   0.271777
+6           tipo_cliente_Natural   0.099405
+7            canal_principal_App   0.086689
+8            canal_principal_Web   0.062561
+9           tipo_cliente_Empresa   0.050353
+10    segmento_recencia_inactivo   0.049523
+11   segmento_recencia_en_riesgo   0.034924
+12               antiguedad_dias   0.032120
+13  canal_principal_Punto físico   0.029333
+14               ciudad_Medellín   0.020455
+
+Gráfica guardada en: 4_outputs\1_figures\03_shap_analysis.png
+
+── Interpretación de resultados ───────────────────────────
+  Las 3 variables más influyentes en la predicción de churn:
+  1. num_reclamos_6m                     mean|SHAP|=0.5687
+  2. nps_score                           mean|SHAP|=0.4417
+  3. num_envios_6m                       mean|SHAP|=0.4271
+
+  Interpretación general:
+  - Valores SHAP positivos → aumentan la probabilidad de churn
+  - Valores SHAP negativos → disminuyen la probabilidad de churn
+  - mean|SHAP| alto → variable muy influyente en la explicabilidad del modelo
+
+
+```

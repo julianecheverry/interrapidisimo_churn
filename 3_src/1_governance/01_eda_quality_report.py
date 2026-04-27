@@ -158,7 +158,7 @@ axes[1,2].set_ylim(0, 0.5)
 
 plt.tight_layout()
 fig.savefig(FIG_PATH / "01_eda_overview.png", dpi=150, bbox_inches="tight")
-plt.show()
+plt.close()
 print(f"\nGráfica guardada en: {FIG_PATH / '01_eda_overview.png'}")
 print("\n✅ EDA completado.")
 

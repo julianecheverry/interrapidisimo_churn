@@ -281,8 +281,8 @@ axes[2].set_xlabel("Recall")
 axes[2].set_ylabel("Precision")
 
 plt.tight_layout()
-fig.savefig(FIG_PATH / "06_model_evaluation.png", dpi=150, bbox_inches="tight")
-plt.show()
+fig.savefig(FIG_PATH / "02_model_evaluation.png", dpi=150, bbox_inches="tight")
+plt.close()
 print(f"\nGráfica guardada en: {FIG_PATH / '02_model_evaluation.png'}")
 
 # ── 12. Guardar pipeline ──────────────────────────────────────────────────────

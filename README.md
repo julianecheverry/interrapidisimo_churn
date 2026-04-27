@@ -331,3 +331,129 @@ max                  NaN          2191.00     NaN          NaN             NaN  
 Dataset final guardado en: 1_data\2_cleaned\05_cleaned_customers.csv
 
 ```
+
+
+
+
+---
+## 🤖 Reporte de Modelado
+```
+============================================================
+REPORTE DE MODELADO — CHURN PREDICTION
+============================================================
+
+Filas cargadas  : 10,000
+Tasa de churn   : 30.83%
+
+── Winsorización valor_total_6m ───────────────────────────
+  Percentil 99   : 34,425,300
+  Valor máximo post-winsorización: 34,425,300
+
+── Features adicionales creadas ───────────────────────────
+  ratio_reclamos_envios  : reclamos / (envíos + 1)
+  segmento_recencia      : categorización de dias_ultimo_envio
+  Distribución segmento_recencia:
+segmento_recencia
+reciente     3893
+activo       2772
+en_riesgo    2099
+inactivo     1236
+
+── Features del modelo ────────────────────────────────────
+  Numéricas   (9): ['antiguedad_dias', 'num_envios_6m', 'valor_total_6m', 'ticket_promedio', 'dias_ultimo_envio', 'num_reclamos_6m', 'tasa_entrega_exitosa', 'nps_score', 'ratio_reclamos_envios']
+  Categóricas (5): ['ciudad', 'tipo_cliente', 'canal_principal', 'tiene_contrato', 'segmento_recencia']
+
+── Split train/test ───────────────────────────────────────
+  Train : 7,000 filas | churn=30.83%
+  Test  : 3,000  filas | churn=30.83%
+
+── Entrenando pipeline (GridSearchCV, 5-fold, scoring=recall)...
+Fitting 5 folds for each of 15 candidates, totalling 75 fits
+
+── Mejores parámetros ─────────────────────────────────────
+  C           : 1
+  l1_ratio    : 0.9
+  Recall CV (train): 0.4546
+
+── Métricas en test ───────────────────────────────────────
+  AUC-ROC : 0.7749
+
+Matriz de confusión:
+[[1883  192]
+ [ 541  384]]
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      Activo       0.78      0.91      0.84      2075
+       Churn       0.67      0.42      0.51       925
+
+    accuracy                           0.76      3000
+   macro avg       0.72      0.66      0.67      3000
+weighted avg       0.74      0.76      0.74      3000
+
+
+── Búsqueda de umbral óptimo (max Recall clase Churn) ─────
+          recall  precision        f1
+umbral                               
+0.20    0.844324   0.436557  0.575534
+0.22    0.809730   0.447967  0.576819
+0.24    0.781622   0.462276  0.580956
+0.26    0.756757   0.475867  0.584307
+0.28    0.727568   0.488744  0.584709
+0.30    0.701622   0.499615  0.583633
+0.32    0.669189   0.507793  0.577425
+0.34    0.651892   0.528947  0.584019
+0.36    0.628108   0.554389  0.588951
+0.38    0.597838   0.569516  0.583333
+0.40    0.568649   0.594350  0.581215
+0.42    0.537297   0.606838  0.569954
+0.44    0.502703   0.623324  0.556553
+0.46    0.475676   0.638607  0.545229
+0.48    0.443243   0.653907  0.528351
+0.50    0.415135   0.666667  0.511659
+0.52    0.383784   0.686654  0.492372
+0.54    0.360000   0.713062  0.478448
+0.56    0.328649   0.722090  0.451709
+0.58    0.311351   0.730964  0.436694
+
+  Umbral óptimo seleccionado: 0.28
+
+── Métricas con umbral=0.28 ────────────────────
+  AUC-ROC : 0.7749
+[[1371  704]
+ [ 252  673]]
+              precision    recall  f1-score   support
+
+      Activo       0.84      0.66      0.74      2075
+       Churn       0.49      0.73      0.58       925
+
+    accuracy                           0.68      3000
+   macro avg       0.67      0.69      0.66      3000
+weighted avg       0.73      0.68      0.69      3000
+
+
+── Métricas de impacto de negocio ─────────────────────────
+
+── Supuestos de negocio (configurables) ───────────────────
+  LTV_PROMEDIO             : 345,200.00
+  COSTO_INTERVENCION       : 15,000.00
+  TASA_RETENCION           : 0.30
+
+── Métricas de impacto ────────────────────────────────────
+  Clientes churn detectados (TP) : 673
+  Falsos positivos (FP)          : 704
+  Clientes a contactar           : 1,377
+  Clientes retenidos estimados   : 413
+  Costo total campaña            : $20,655,000 COP
+  Ingreso retenido estimado      : $142,567,600 COP
+  ROI estimado del modelo        : 590.2%
+
+  ⚠ Supuestos estimados — validar con áreas comercial y financiera para mayor precisión en métricas de negocio
+
+Gráfica guardada en: 4_outputs\1_figures\02_model_evaluation.png
+
+── Pipeline guardado en: 1_data\3_features\pipeline.pkl
+  Verificación predict() desde .pkl: [0 0 0 1 0]
+
+```

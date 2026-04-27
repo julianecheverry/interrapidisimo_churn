@@ -1,0 +1,42 @@
+============================================================
+REPORTE DE IMPUTACIÓN Y ELIMINACIÓN DE DUPLICADOS
+============================================================
+
+Filas cargadas  : 10,300
+Nulos totales   : 9,629
+Duplicados      : 300
+
+── Deduplicación ──────────────────────────────────────────
+  Filas antes    : 10,300
+  Duplicados eliminados : 300
+  Filas después  : 10,000
+
+── Imputación de variables numéricas — mediana ──────────────────────────
+                      nulos_imp      mediana
+variable                                    
+antiguedad_dias             808    1273.0000
+num_envios_6m               753       8.0000
+valor_total_6m              760  172600.0000
+ticket_promedio             755   15900.0000
+dias_ultimo_envio           717      31.0000
+num_reclamos_6m             803       1.0000
+tasa_entrega_exitosa        794       0.8788
+nps_score                   797       6.5000
+
+── Imputación de variables categóricas (moda) ───────────────────────────
+                 nulos_imp     moda
+variable                           
+ciudad                 758   Bogotá
+tipo_cliente           715  Natural
+canal_principal        786      App
+
+── Fechas NaT conservadas (excluidas del modelo) ──────────
+  fecha_registro NaT : 226
+  Columnas excluidas del modelo: ['fecha_registro', 'anio_registro', 'mes_registro', 'dia_semana']
+
+── Verificación final ─────────────────────────────────────
+  Nulos restantes en features  : 0
+  Filas finales                : 10,000
+  Tasa de churn conservada     : 30.83%
+
+Dataset guardado en: 1_data\2_cleaned\04_imputed.csv

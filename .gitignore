@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Entorno
+.venv/
+.env
+
+# Poetry
+# poetry.lock
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Datos sensibles
+# data/raw/*.csv
+# data/cleaned/*.csv
+# data/features/*.csv
+
+# Outputs grandes
+# outputs/figures/*.png
+# outputs/metrics/*.json
+
+# OS
+.DS_Store
+Thumbs.db
+EOF

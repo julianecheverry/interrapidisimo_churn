@@ -1,0 +1,33 @@
+============================================================
+REPORTE DE LIMPIEZA DE FECHAS
+============================================================
+
+Filas cargadas : 10,300
+
+── Diagnóstico previo ─────────────────────────────────────
+  Fechas estándar (YYYY-MM-DD) : 9,268
+  Fechas no estándar           : 1,032
+  Nulos                        : 0
+
+── Aplicando parseo multi-formato ─────────────────────────
+  Fechas ajustadas exitosamente : 10,065
+  Fechas no ajustables (→ NaT)  : 235
+  Tasa de recuperación de fechas: 97.72%
+
+── Columnas derivadas creadas ─────────────────────────────
+  anio_registro : {np.int64(2019): 2022, np.int64(2020): 1994, np.int64(2021): 1955, np.int64(2022): 2082, np.int64(2023): 2012}
+  mes_registro  : valores 1-12, nulos=235
+  dia_semana    : valores 0-6,  nulos=235
+
+── Muestra de fechas recuperadas ──────────────────────────
+     original   ajustada
+0  2022-11-06 2022-11-06
+1  11-08-2023 2023-11-08
+2  2020-08-22 2020-08-22
+3  2021-07-17 2021-07-17
+4  2019-05-07 2019-05-07
+5  2023-06-23 2023-06-23
+6  2020-12-24 2020-12-24
+7  2021-06-12 2021-06-12
+
+Dataset guardado en: 1_data\2_cleaned\03_dates_cleaned.csv

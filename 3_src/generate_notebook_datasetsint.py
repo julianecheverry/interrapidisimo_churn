@@ -99,13 +99,53 @@ print(f"Valor máximo post-wins.: {df['valor_total_6m'].max():,.0f} COP")"""
 
 # ── Celda 5: Feature Engineering ─────────────────────────────────────────────
 cells.append(nbf.v4.new_markdown_cell(
-"""## 4. Feature Engineering
 
-| Feature | Fórmula | Justificación |
+# 📋 Diccionario de Datos — `raw_data_customers.csv`
+
+## Variables originales
+
+| # | Variable | Tipo | Descripción | Valores posibles | ¿PII? | Tratamiento |
+|---|---|---|---|---|---|---|
+| 1 | `customer_id` | string | Identificador único del cliente | CLI000001... | ⚠️ Sí | Hasheado SHA-256 |
+| 2 | `nombre` | string | Nombre completo del cliente | Texto libre | ⚠️ Sí | Eliminado |
+| 3 | `email` | string | Correo electrónico | Texto libre | ⚠️ Sí | Eliminado |
+| 4 | `telefono` | string | Teléfono de contacto | Texto libre | ⚠️ Sí | Eliminado |
+| 5 | `fecha_registro` | string | Fecha de registro del cliente | YYYY-MM-DD (+ formatos corruptos) | No | Parseada multi-formato → NaT si inválida |
+| 6 | `antiguedad_dias` | numérico | Días como cliente activo | 0 — 1825 | No | Imputado con mediana |
+| 7 | `ciudad` | categórico | Ciudad de origen del cliente | Bogotá, Medellín, Cali... | No | Imputado con moda |
+| 8 | `tipo_cliente` | categórico | Segmento del cliente | Natural, Empresa, Ecommerce | No | Imputado con moda |
+| 9 | `canal_principal` | categórico | Canal de uso preferido | App, Web, Punto físico, API | No | Imputado con moda |
+| 10 | `tiene_contrato` | binario | Si tiene contrato corporativo | 0, 1 | No | Sin imputación |
+| 11 | `num_envios_6m` | numérico | Número de envíos últimos 6 meses | 0 — n | No | Imputado con mediana |
+| 12 | `valor_total_6m` | numérico | Valor total facturado últimos 6 meses (COP) | 0 — 50.000.000 | No | Imputado con mediana + Winsorización p99 |
+| 13 | `ticket_promedio` | numérico | Valor promedio por envío (COP) | 3.000 — n | No | Imputado con mediana |
+| 14 | `dias_ultimo_envio` | numérico | Días desde el último envío (recencia) | 1 — 365 | No | Imputado con mediana |
+| 15 | `num_reclamos_6m` | numérico | Número de reclamos últimos 6 meses | 0 — n | No | Imputado con mediana |
+| 16 | `tasa_entrega_exitosa` | numérico | % de envíos entregados sin novedad | 0.50 — 1.00 | No | Imputado con mediana |
+| 17 | `nps_score` | numérico | Net Promoter Score del cliente | 0 — 10 | No | Imputado con mediana |
+| 18 | `churn` | binario | Variable objetivo — fuga del cliente | 0 = Activo, 1 = Churn | No | Target |
+
+## Variables derivadas (Feature Engineering)
+
+| # | Variable | Origen | Fórmula | Usado en modelo |
+|---|---|---|---|---|
+| 19 | `anio_registro` | `fecha_registro` | `dt.year` | ❌ Excluido (fechas NaT) |
+| 20 | `mes_registro` | `fecha_registro` | `dt.month` | ❌ Excluido (fechas NaT) |
+| 21 | `dia_semana` | `fecha_registro` | `dt.dayofweek` | ❌ Excluido (fechas NaT) |
+| 22 | `ratio_reclamos_envios` | `num_reclamos_6m`, `num_envios_6m` | reclamos / (envíos + 1) | ✅ Incluido |
+| 23 | `segmento_recencia` | `dias_ultimo_envio` | bins: activo / reciente / en_riesgo / inactivo | ✅ Incluido |
+
+## Suciedad introducida en el dataset sintético
+
+| Tipo | Detalle | Cantidad |
 |---|---|---|
-| `ratio_reclamos_envios` | reclamos / (envíos + 1) | Normaliza reclamos por actividad |
-| `segmento_recencia` | bins de `dias_ultimo_envio` | Captura ciclo de vida del cliente |"""
+| Nulos aleatorios | En 11 columnas no sensibles | ~8% de celdas |
+| Duplicados | Filas completas duplicadas | ~3% (300 filas) |
+| Fechas corruptas | DD/MM/YYYY, MM-DD-YYYY, YYYYMMDD, DD Mon YYYY, 99/99/9999 | ~10% (1.000 filas) |
+| Outliers extremos | `valor_total_6m` entre 5M y 50M COP | 325 filas |
+
 ))
+
 cells.append(nbf.v4.new_code_cell(
 """df["ratio_reclamos_envios"] = df["num_reclamos_6m"] / (df["num_envios_6m"] + 1)
 

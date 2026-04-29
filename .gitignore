@@ -5,6 +5,7 @@ __pycache__/
 dist/
 build/
 .eggs/
+3_src/generate_notebook_datasetsint.py
 
 # Entorno
 .venv/

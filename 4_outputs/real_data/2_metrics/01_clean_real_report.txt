@@ -1,0 +1,85 @@
+============================================================
+REPORTE DE LIMPIEZA — raw_data_customers_lpgr.csv
+============================================================
+
+Filas cargadas  : 114
+Columnas        : ['customer_id', 'full_name', 'email', 'phone', 'signup_date', 'last_purchase_date', 'monthly_spend', 'total_shipments', 'churn_label', 'home_address']
+
+── Columnas después de limpiar comillas ───────────────────
+['customer_id', 'full_name', 'email', 'phone', 'signup_date', 'last_purchase_date', 'monthly_spend', 'total_shipments', 'churn_label', 'home_address']
+
+── Nulos estandarizados (NULL/N/A → NaN) ──────────────────
+phone                  2
+last_purchase_date     1
+monthly_spend         16
+total_shipments        2
+churn_label            1
+home_address           8
+  customer_id     full_name                  email  ... total_shipments churn_label       home_address
+0        C001    Juan Perez       jperez@email.com  ...            12.0         0.0    Calle Falsa 123
+1        C002  Maria Garcia  m.garcia@provider.net  ...            45.0         0.0  Carrera 7 # 45-10
+
+[2 rows x 10 columns]
+customer_id               str
+full_name                 str
+email                     str
+phone                     str
+signup_date               str
+last_purchase_date        str
+monthly_spend         float64
+total_shipments       float64
+churn_label           float64
+home_address              str
+dtype: object
+RangeIndex(start=0, stop=114, step=1)
+
+── Deduplicación ──────────────────────────────────────────
+  Filas antes              : 114
+  Duplicados eliminados    : 4
+  Filas después            : 110
+
+── Limpieza de fechas ─────────────────────────────────────
+  signup_date              : NaT antes=0 | NaT después=0
+  last_purchase_date       : NaT antes=1 | NaT después=1
+  antiguedad_dias    : calculado desde signup_date
+  dias_ultimo_envio  : calculado desde last_purchase_date
+
+── Limpieza de monthly_spend ──────────────────────────────
+  Valores negativos → NaN : 3
+  Outliers detectados (IQR): 10
+  Winsorización p99  : 99,999.00
+
+── Limpieza de total_shipments ────────────────────────────
+  Outliers detectados (IQR): 14
+  Winsorización p99  : 493.00
+
+── Imputación de nulos ────────────────────────────────────
+  monthly_spend            : 19 nulos → mediana=850.00
+  total_shipments          : 2 nulos → mediana=22.00
+  antiguedad_dias          : 0 nulos → mediana=404.00
+  dias_ultimo_envio        : 1 nulos → mediana=21.00
+  churn_label              : 1 nulos → moda=0.0
+
+── Anonimización PII ──────────────────────────────────────
+  customer_id hasheado (SHA-256)
+  Columnas PII eliminadas: ['full_name', 'email', 'phone', 'home_address']
+
+── Resumen final ──────────────────────────────────────────
+  Filas finales   : 110
+  Columnas        : ['customer_id', 'fecha_registro', 'fecha_ultimo_envio', 'valor_mensual', 'num_envios_total', 'churn', 'antiguedad_dias', 'dias_ultimo_envio']
+  Nulos restantes : 1
+  Tasa de churn   : 24.55%
+
+                   fecha_registro          fecha_ultimo_envio  valor_mensual  num_envios_total   churn  antiguedad_dias  dias_ultimo_envio
+count                         110                         109         110.00            110.00  110.00           110.00             110.00
+mean   2024-04-19 07:38:10.909091  2025-04-25 08:35:13.761468        3292.54             54.82    0.25           426.68              55.33
+min           2023-01-01 00:00:00         2023-12-30 00:00:00          10.00              0.00    0.00            31.00               0.00
+25%           2023-10-03 06:00:00         2025-04-30 00:00:00         457.88             10.00    0.00           209.50              10.00
+50%           2024-05-12 00:00:00         2025-05-30 00:00:00         850.00             22.00    0.00           404.00              21.00
+75%           2024-11-22 12:00:00         2025-06-10 00:00:00        1375.00             50.00    0.00           625.75              50.75
+max           2025-05-20 00:00:00         2025-06-20 00:00:00       99999.00            493.00    1.00           901.00             538.00
+std                           NaN                         NaN       13369.43             89.10    0.43           249.97              82.00
+Guardando en: C:\Users\HP ENVY\Documents\HOJA DE VIDA ACT\pruebaJES_interrapidisimo_2026\pruebaJES_interrapidisimo_repo\1_data\real_data\2_cleaned\01_cleaned_real.csv
+Filas guardadas: 110
+
+Dataset limpio guardado en: 1_data\real_data\2_cleaned\01_cleaned_real.csv

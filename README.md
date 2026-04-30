@@ -20,6 +20,7 @@ El proyecto aborda tres pilares principales:
 
 ## 📁 Estructura del Repositorio
 
+```
 interrapidisimo-churn/
 ├── 1_data/
 │   ├── synthetic_data/
@@ -41,15 +42,16 @@ interrapidisimo-churn/
 │       ├── 1_governance/   ← limpieza dataset real
 │       └── 2_modeling/     ← modelado dataset real
 └── 4_outputs/
-		├── synthetic_data/
-		│   ├── 1_figures/      ← gráficas EDA, modelo, SHAP
-		│   └── 2_metrics/      ← reportes de calidad y modelo
-		└── real_data/
-			├── 1_figures/      ← gráficas modelo real
-			└── 2_metrics/      ← reportes modelo real
+|		├── synthetic_data/
+|		│   ├── 1_figures/      ← gráficas EDA, modelo, SHAP
+|		│   └── 2_metrics/      ← reportes de calidad y modelo
+|		└── real_data/
+|			├── 1_figures/      ← gráficas modelo real
+|			└── 2_metrics/      ← reportes modelo real
 |
 └── 5_docs/
 └── pyproject.toml
+```
 
 ---
 
@@ -161,6 +163,7 @@ python 3_src/real_data/2_modeling/03_shap_real.py
 3. `num_envios_6m` — La actividad reciente refleja el compromiso
 
 **── Métricas de impacto ────────────────────────────────────**
+```
 ── Supuestos de negocio (configurables) ───────────────────
   LTV_PROMEDIO             : 345,200.00
   COSTO_INTERVENCION       : 15,000.00
@@ -173,8 +176,9 @@ python 3_src/real_data/2_modeling/03_shap_real.py
   Costo total campaña            : $20,655,000 COP
   Ingreso retenido estimado      : $142,567,600 COP
   ROI estimado del modelo        : 590.2%
+```
 
-  ⚠ Supuestos estimados — validar con áreas comercial y financiera para mayor precisión en métricas de negocio
+⚠ Supuestos estimados — validar con áreas comercial y financiera para mayor precisión en métricas de negocio
 
 ### Dataset Real (110 filas)
 
@@ -197,7 +201,7 @@ python 3_src/real_data/2_modeling/03_shap_real.py
 3. `gasto_por_envio` — Variable *Feature-engineered*: permite hacer una comparación del gasto de los clientes a escala.
 
 **── Métricas de impacto de negocio ─────────────────────────**
-
+```
 ── Supuestos de negocio (configurables) ───────────────────
   LTV_PROMEDIO             : 10,200.00
   COSTO_INTERVENCION       : 15,000.00
@@ -209,7 +213,8 @@ python 3_src/real_data/2_modeling/03_shap_real.py
   Ingreso retenido estimado      : $20,400 COP
   ROI estimado                   : -83.0%
 
-  ⚠ Supuestos estimados — validar con áreas comercial y financiera para mayor precisión en métricas de negocio
+```
+⚠ Supuestos estimados — validar con áreas comercial y financiera para mayor precisión en métricas de negocio
 
 ### Recomendaciones generales para el Negocio
 

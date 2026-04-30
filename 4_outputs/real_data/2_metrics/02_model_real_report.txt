@@ -1,0 +1,74 @@
+============================================================
+REPORTE DE MODELADO — DATASET REAL
+============================================================
+
+Filas cargadas  : 110
+Tasa de churn   : 24.55%
+Columnas        : ['customer_id', 'fecha_registro', 'fecha_ultimo_envio', 'valor_mensual', 'num_envios_total', 'churn', 'antiguedad_dias', 'dias_ultimo_envio']
+
+── Features del modelo ────────────────────────────────────
+  Numéricas (4): ['valor_mensual', 'num_envios_total', 'antiguedad_dias', 'dias_ultimo_envio']
+
+  Nota: dataset real no contiene nps_score, num_reclamos_6m
+  ni variables categóricas suficientes para OHE.
+  Se modela solo con features numéricas disponibles.
+
+── Feature Engineering ────────────────────────────────────
+  gasto_por_envio = valor_mensual / (num_envios_total + 1)
+
+── Split train/test ───────────────────────────────────────
+  Train : 77 filas | churn=24.68%
+  Test  : 33  filas | churn=24.24%
+
+── Entrenando pipeline (GridSearchCV 5-fold)...
+
+── Mejores parámetros ─────────────────────────────────────
+  C           : 1
+  l1_ratio    : 0.0
+  Recall CV (train): 0.7167
+
+── Métricas con umbral=0.5 ────────────────────────────────
+  AUC-ROC : 0.9750
+[[25  0]
+ [ 5  3]]
+              precision    recall  f1-score   support
+
+      Activo       0.83      1.00      0.91        25
+       Churn       1.00      0.38      0.55         8
+
+    accuracy                           0.85        33
+   macro avg       0.92      0.69      0.73        33
+weighted avg       0.87      0.85      0.82        33
+
+
+── Métricas con umbral=0.2 ────────────────────
+  AUC-ROC : 0.9750
+[[24  1]
+ [ 1  7]]
+              precision    recall  f1-score   support
+
+      Activo       0.96      0.96      0.96        25
+       Churn       0.88      0.88      0.88         8
+
+    accuracy                           0.94        33
+   macro avg       0.92      0.92      0.92        33
+weighted avg       0.94      0.94      0.94        33
+
+
+── Métricas de impacto de negocio ─────────────────────────
+  LTV_PROMEDIO             : 10,200.00
+  COSTO_INTERVENCION       : 15,000.00
+  TASA_RETENCION           : 0.30
+
+  Clientes churn detectados (TP): 7
+  Falsos positivos (FP)          : 1
+  Costo total campaña            : $120,000 COP
+  Ingreso retenido estimado      : $20,400 COP
+  ROI estimado                   : -83.0%
+
+  ⚠ Supuestos estimados — validar con área comercial
+
+Gráfica guardada en: 4_outputs\real_data\1_figures\02_model_real_evaluation.png
+
+── Pipeline guardado en: 1_data\real_data\3_features\pipeline_real.pkl
+  Verificación predict() desde .pkl: [0 0 0 0 0]

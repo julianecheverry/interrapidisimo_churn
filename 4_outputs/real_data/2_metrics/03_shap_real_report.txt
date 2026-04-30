@@ -1,0 +1,28 @@
+============================================================
+REPORTE SHAP — DATASET REAL
+============================================================
+
+Pipeline cargado desde: 1_data\real_data\3_features\pipeline_real.pkl
+Mejores parámetros: {'C': 1, 'l1_ratio': 0.0}
+
+SHAP values calculados sobre 110 filas
+
+── Importancia global (mean |SHAP|) ───────────────────────
+             feature  mean_shap
+0  dias_ultimo_envio   1.104096
+1   num_envios_total   0.757339
+2    gasto_por_envio   0.304860
+3      valor_mensual   0.287441
+4    antiguedad_dias   0.016188
+
+── Top 3 variables más influyentes ────────────────────────
+  1. dias_ultimo_envio         mean|SHAP|=1.1041
+  2. num_envios_total          mean|SHAP|=0.7573
+  3. gasto_por_envio           mean|SHAP|=0.3049
+
+── Interpretación ─────────────────────────────────────────
+  - SHAP positivo → aumenta probabilidad de churn
+  - SHAP negativo → disminuye probabilidad de churn
+  - mean|SHAP| alto → variable muy influyente globalmente
+
+Gráfica guardada en: 4_outputs\real_data\1_figures\03_shap_real.png

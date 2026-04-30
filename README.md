@@ -1,446 +1,171 @@
+# 🚀 Churn Prediction — Interrapidísimo
 
-
----
-## 📊 Reporte de Calidad — Data Raw
-```
-============================================================
-REPORTE DE CALIDAD — raw_data_customers.csv
-============================================================
-
-Dimensiones        : 10,300 filas × 18 columnas
-Duplicados exactos : 300
-Tasa de registros marcados como churn      : 30.75%
-
-── Tipos y nulos por columna ──────────────────────────────
-                        dtype  nulos  porcentaje_nulos  registros_unicos
-customer_id               str      0              0.00             10000
-nombre                    str      0              0.00              9838
-email                     str      0              0.00              9561
-telefono                  str      0              0.00             10000
-fecha_registro            str      0              0.00              2546
-antiguedad_dias       float64    822              7.98              1809
-ciudad                    str    784              7.61                10
-tipo_cliente              str    737              7.16                 3
-canal_principal           str    807              7.83                 4
-tiene_contrato          int64      0              0.00                 2
-num_envios_6m         float64    776              7.53                33
-valor_total_6m        float64    783              7.60              3494
-ticket_promedio       float64    770              7.48               731
-dias_ultimo_envio     float64    743              7.21               262
-num_reclamos_6m       float64    827              8.03                 7
-tasa_entrega_exitosa  float64    812              7.88              2717
-nps_score             float64    828              8.04               101
-churn                   int64      0              0.00                 2
-
-── Estadísticas descriptivas (variables numéricas) ──────────────────
-       antiguedad_dias  tiene_contrato  num_envios_6m  valor_total_6m  ticket_promedio  dias_ultimo_envio  num_reclamos_6m  tasa_entrega_exitosa  nps_score     churn
-count          9478.00        10300.00        9524.00         9517.00          9530.00            9557.00           9473.0               9488.00    9472.00  10300.00
-mean           1276.05            0.35           9.31      1147234.33         23253.75              44.56              1.2                  0.88       6.41      0.31
-std             528.59            0.48           6.43      5412622.43         16633.58              44.81              1.1                  0.08       2.09      0.46
-min             367.00            0.00           0.00            0.00          3000.00               1.00              0.0                  0.61       0.00      0.00
-25%             819.25            0.00           4.00        44700.00         11500.00              13.00              0.0                  0.83       5.00      0.00
-50%            1274.00            0.00           8.00       171200.00         15900.00              31.00              1.0                  0.88       6.50      0.00
-75%            1729.00            1.00          14.00       447600.00         32900.00              62.00              2.0                  0.93       8.00      1.00
-max            2191.00            1.00          33.00     49999000.00         92400.00             365.00              6.0                  1.00      10.00      1.00
-
-── Outliers por variable numérica continua (método IQR) ───
-                            Q1         Q3        IQR    lim_inf     lim_sup  n_outliers  pct_out
-variable                                                                                        
-antiguedad_dias         819.25    1729.00     909.75    -545.38     3093.62           0     0.00
-num_envios_6m             4.00      14.00      10.00     -11.00       29.00          10     0.10
-valor_total_6m        44700.00  447600.00  402900.00 -559650.00  1051950.00         389     4.09
-ticket_promedio       11500.00   32900.00   21400.00  -20600.00    65000.00         190     1.99
-dias_ultimo_envio        13.00      62.00      49.00     -60.50      135.50         441     4.61
-num_reclamos_6m           0.00       2.00       2.00      -3.00        5.00           7     0.07
-tasa_entrega_exitosa      0.83       0.93       0.11       0.66        1.10          35     0.37
-nps_score                 5.00       8.00       3.00       0.50       12.50          30     0.32
-
-── Muestra de fechas potencialmente corruptas ─────────────
-Fechas no estándar (no YYYY-MM-DD): 1,032
-fecha_registro
-99/99/9999     235
-20201006         3
-20231124         3
-07/10/2020       2
-12-06-2022       2
-20230513         2
-08-07-2022       2
-10 Mar 2023      2
-26/05/2019       2
-11/07/2023       2
-Name: count, dtype: int64
-
-── Distribución de categóricas ────────────────────────────
-
-ciudad:
-ciudad
-Bogotá          2893
-Medellín        1891
-Cali            1436
-Barranquilla     972
-NaN              784
-Cartagena        669
-Name: count, dtype: int64
-
-tipo_cliente:
-tipo_cliente
-Natural      4721
-Empresa      2921
-Ecommerce    1921
-NaN           737
-Name: count, dtype: int64
-
-canal_principal:
-canal_principal
-App             3262
-Web             2821
-Punto físico    2485
-API              925
-NaN              807
-Name: count, dtype: int64
-
-tiene_contrato:
-tiene_contrato
-0    6673
-1    3627
-Name: count, dtype: int64
-
-Gráfica guardada en: 4_outputs\1_figures\01_eda_overview.png
-
-✅ EDA completado.
-
-```
-
+**Autor:** Julian Echeverry  
+**Rol:** Científico de Datos y Analítica  *Prueba técnica*
+**Fecha:** 29 de Abril 2026
 
 ---
-## 🔒 Reporte de Anonimización
-```
-============================================================
-REPORTE DE ANONIMIZACIÓN
-============================================================
 
-Filas cargadas : 10,300
-Columnas antes de la anonimización: ['customer_id', 'nombre', 'email', 'telefono', 'fecha_registro', 'antiguedad_dias', 'ciudad', 'tipo_cliente', 'canal_principal', 'tiene_contrato', 'num_envios_6m', 'valor_total_6m', 'ticket_promedio', 'dias_ultimo_envio', 'num_reclamos_6m', 'tasa_entrega_exitosa', 'nps_score', 'churn']
+## 📋 Descripción del Proyecto
 
-── Variables PII identificadas ────────────────────────────
-  ✖ nombre          → será eliminada
-  ✖ email           → será eliminada
-  ✖ telefono        → será eliminada
-  ⚙ customer_id     → será hasheada (SHA-256)
+Pipeline completo de predicción de churn (fuga de clientes) para Interrapidísimo, empresa colombiana de mensajería y transporte de carga.
 
-── Muestra de customer_id hasheado ────────────────────────
-0    eba190fb9ed9cc38
-1    4ac66c326fa997c5
-2    d82c91ffabf02a54
-3    90867e0226bd9f39
-4    ec8f73f35fe3a31f
+El proyecto aborda tres pilares principales:
 
-── Columnas después de anonimización ──────────────────────
-['customer_id', 'fecha_registro', 'antiguedad_dias', 'ciudad', 'tipo_cliente', 'canal_principal', 'tiene_contrato', 'num_envios_6m', 'valor_total_6m', 'ticket_promedio', 'dias_ultimo_envio', 'num_reclamos_6m', 'tasa_entrega_exitosa', 'nps_score', 'churn']
-
-Columnas eliminadas : ['nombre', 'email', 'telefono']
-Columnas restantes  : 15
-Filas conservadas   : 10,300
-
-── Verificación PII ───────────────────────────────────────
-  ✅ Ninguna columna PII presente en el dataset.
-
-Dataset anonimizado guardado en: 1_data\2_cleaned\02_anonymized.csv
-
-```
-
+1. **Data Governance & Cleaning**: tratamiento de datos sucios, anonimización de PII (datos sensibles de acuerdo con la ley 1581 de 2012), imputación de valores nulos y eliminación de duplicados.
+2. **Advanced Analytics**: modelado predictivo con Regresión Logística, ingeniería de características y análisis de explicabilidad con SHAP.
+3. **Cloud Architecture**: diseño de arquitectura conceptual en AWS (S3, Glue, ECR, SageMaker) para productivizar la solución a escala de millones de registros.
 
 ---
-## 📅 Reporte de Limpieza de Fechas
-```
-============================================================
-REPORTE DE LIMPIEZA DE FECHAS
-============================================================
 
-Filas cargadas : 10,300
+## 📁 Estructura del Repositorio
 
-── Diagnóstico previo ─────────────────────────────────────
-  Fechas estándar (YYYY-MM-DD) : 9,268
-  Fechas no estándar           : 1,032
-  Nulos                        : 0
-
-── Aplicando parseo multi-formato ─────────────────────────
-  Fechas ajustadas exitosamente : 10,065
-  Fechas no ajustables (→ NaT)  : 235
-  Tasa de recuperación de fechas: 97.72%
-
-── Columnas derivadas creadas ─────────────────────────────
-  anio_registro : {np.int64(2019): 2022, np.int64(2020): 1994, np.int64(2021): 1955, np.int64(2022): 2082, np.int64(2023): 2012}
-  mes_registro  : valores 1-12, nulos=235
-  dia_semana    : valores 0-6,  nulos=235
-
-── Muestra de fechas recuperadas ──────────────────────────
-     original   ajustada
-0  2022-11-06 2022-11-06
-1  11-08-2023 2023-11-08
-2  2020-08-22 2020-08-22
-3  2021-07-17 2021-07-17
-4  2019-05-07 2019-05-07
-5  2023-06-23 2023-06-23
-6  2020-12-24 2020-12-24
-7  2021-06-12 2021-06-12
-
-Dataset guardado en: 1_data\2_cleaned\03_dates_cleaned.csv
-
-```
-
+interrapidisimo-churn/
+├── 1_data/
+│   ├── synthetic_data/
+│   │   ├── 1_raw/          ← dataset sintético crudo (10.300 filas)
+│   │   ├── 2_cleaned/      ← capas de limpieza intermedias
+│   │   └── 3_features/     ← pipeline.pkl entrenado
+│   └── real_data/
+│       ├── 1_raw/          ← dataset real de 114 filas (raw_data_customers_lpgr.csv)
+│       ├── 2_cleaned/      ← dataset real limpio
+│       └── 3_features/     ← pipeline_real.pkl entrenado
+├── 2_notebooks/
+│   └── 01_modeling_datasetsintetico.ipynb  ← notebook con narrativa completa
+├── 3_src/
+│   ├── synthetic_data/
+│   │   ├── 1_governance/   ← scripts de limpieza dataset sintético
+│   │   ├── 2_modeling/     ← scripts de modelado dataset sintético
+│   │   └── 3_architecture/ ← diagrama AWS
+│   └── real_data/
+│       ├── 1_governance/   ← limpieza dataset real
+│       └── 2_modeling/     ← modelado dataset real
+└── 4_outputs/
+		├── synthetic_data/
+		│   ├── 1_figures/      ← gráficas EDA, modelo, SHAP
+		│   └── 2_metrics/      ← reportes de calidad y modelo
+		└── real_data/
+			├── 1_figures/      ← gráficas modelo real
+			└── 2_metrics/      ← reportes modelo real
+|
+└── 5_docs/
+└── pyproject.toml
 
 ---
-## 🔧 Reporte de Imputación y Deduplicación
-```
-============================================================
-REPORTE DE IMPUTACIÓN Y ELIMINACIÓN DE DUPLICADOS
-============================================================
 
-Filas cargadas  : 10,300
-Nulos totales   : 9,629
-Duplicados      : 300
+## ⚙️ Instalación y Ejecución en máquina local
 
-── Deduplicación ──────────────────────────────────────────
-  Filas antes    : 10,300
-  Duplicados eliminados : 300
-  Filas después  : 10,000
+### Requisitos
+- Python 3.11
+- Poetry 2.3+
 
-── Imputación de variables numéricas — mediana ──────────────────────────
-                      nulos_imp      mediana
-variable                                    
-antiguedad_dias             808    1273.0000
-num_envios_6m               753       8.0000
-valor_total_6m              760  172600.0000
-ticket_promedio             755   15900.0000
-dias_ultimo_envio           717      31.0000
-num_reclamos_6m             803       1.0000
-tasa_entrega_exitosa        794       0.8788
-nps_score                   797       6.5000
+### Pasos
 
-── Imputación de variables categóricas (moda) ───────────────────────────
-                 nulos_imp     moda
-variable                           
-ciudad                 758   Bogotá
-tipo_cliente           715  Natural
-canal_principal        786      App
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/julianecheverry/interrapidisimo-churn.git
+cd interrapidisimo-churn
 
-── Fechas NaT conservadas (excluidas del modelo) ──────────
-  fecha_registro NaT : 226
-  Columnas excluidas del modelo: ['fecha_registro', 'anio_registro', 'mes_registro', 'dia_semana']
+# 2. Instalar dependencias
+poetry install
 
-── Verificación final ─────────────────────────────────────
-  Nulos restantes en features  : 0
-  Filas finales                : 10,000
-  Tasa de churn conservada     : 30.83%
+# 3. Activar ambiente
+poetry env use python3.11
+# En Windows:
+# "C:\\...\\interrapidisimo-churn-py3.11\\Scripts\\activate.bat"
 
-Dataset guardado en: 1_data\2_cleaned\04_imputed.csv
-
+# 4. Registrar kernel Jupyter
+python -m ipykernel install --user --name=interrapidisimo-churn
 ```
 
+### Ejecutar pipeline dataset sintético
+
+```bash
+# Fase 0 — Generar dataset sintético
+python 3_src/generate_synthetic_data.py
+
+# Fase 1 — Governance & Cleaning
+python 3_src/synthetic_data/1_governance/01_eda_quality_report.py
+python 3_src/synthetic_data/1_governance/02_anonymization.py
+python 3_src/synthetic_data/1_governance/03_date_cleaning.py
+python 3_src/synthetic_data/1_governance/04_imputation_dedup.py
+python 3_src/synthetic_data/1_governance/05_cleaned_file.py
+
+# Fase 2 — Modelado
+python 3_src/synthetic_data/2_modeling/01_train_model.py
+python 3_src/synthetic_data/2_modeling/02_shap_analysis.py
+
+# Fase 3 — Arquitectura AWS
+python 3_src/synthetic_data/3_architecture/01_aws_architecture.py
+```
+
+### Ejecutar pipeline dataset real
+
+```bash
+# Limpieza
+python 3_src/real_data/1_governance/01_clean_real.py
+
+# Modelado + SHAP
+python 3_src/real_data/2_modeling/02_model_real.py
+python 3_src/real_data/2_modeling/03_shap_real.py
+```
 
 ---
-## ✅ Reporte — Capa Cleaned Final
-```
-============================================================
-REPORTE — CAPA CLEANED FINAL
-============================================================
 
-── Columnas eliminadas (fechas NaT / no usadas en modelo) ─
-  ✖ fecha_registro
-  ✖ anio_registro
-  ✖ mes_registro
-  ✖ dia_semana_registro
+## 🔬 Principales Decisiones Técnicas
 
-── Resumen final ──────────────────────────────────────────
-  Filas                : 10,000
-  Columnas             : 14
-  Nulos restantes      : 0
-  Tasa de churn        : 30.83%
+### Data Governance
+| Decisión | Justificación |
+|---|---|
+| Anonimización PII con SHA-256 | Irreversible pero permite cruzar tablas por ID |
+| Imputación numérica con mediana | Robusta frente a valores extremos (dataset sintético tiene 325 outliers extremos) |
+| Imputación categórica con moda | Preserva la distribución original |
+| Fechas NaT excluidas del modelo | Insuficiente información para imputar fechas imposibles |
+| Winsorización p99 en valor_total_6m | Trata outliers sin tener que eliminar filas con variables diligenciadas|
 
-── Columnas del dataset limpio ────────────────────────────
-   1. customer_id
-   2. antiguedad_dias
-   3. ciudad
-   4. tipo_cliente
-   5. canal_principal
-   6. tiene_contrato
-   7. num_envios_6m
-   8. valor_total_6m
-   9. ticket_promedio
-  10. dias_ultimo_envio
-  11. num_reclamos_6m
-  12. tasa_entrega_exitosa
-  13. nps_score
-  14. churn
-
-── Tipos de datos finales ─────────────────────────────────
-customer_id                 str
-antiguedad_dias         float64
-ciudad                      str
-tipo_cliente                str
-canal_principal             str
-tiene_contrato            int64
-num_envios_6m           float64
-valor_total_6m          float64
-ticket_promedio         float64
-dias_ultimo_envio       float64
-num_reclamos_6m         float64
-tasa_entrega_exitosa    float64
-nps_score               float64
-churn                     int64
-
-── Estadísticas descriptivas finales ──────────────────────
-             customer_id  antiguedad_dias  ciudad tipo_cliente canal_principal  tiene_contrato  num_envios_6m  valor_total_6m  ticket_promedio  dias_ultimo_envio  num_reclamos_6m  tasa_entrega_exitosa  nps_score     churn
-count              10000         10000.00   10000        10000           10000        10000.00       10000.00        10000.00         10000.00           10000.00         10000.00              10000.00   10000.00  10000.00
-unique             10000              NaN      10            3               4             NaN            NaN             NaN              NaN                NaN              NaN                   NaN        NaN       NaN
-top     eba190fb9ed9cc38              NaN  Bogotá      Natural             App             NaN            NaN             NaN              NaN                NaN              NaN                   NaN        NaN       NaN
-freq                   1              NaN    3567         5294            3959             NaN            NaN             NaN              NaN                NaN              NaN                   NaN        NaN       NaN
-mean                 NaN          1275.94     NaN          NaN             NaN            0.35           9.20      1076646.90         22712.49              43.59             1.19                  0.88       6.42      0.31
-std                  NaN           506.98     NaN          NaN             NaN            0.48           6.18      5232119.28         16134.41              43.29             1.05                  0.07       2.01      0.46
-min                  NaN           367.00     NaN          NaN             NaN            0.00           0.00            0.00          3000.00               1.00             0.00                  0.61       0.00      0.00
-25%                  NaN           855.00     NaN          NaN             NaN            0.00           4.00        47500.00         11900.00              14.00             0.00                  0.83       5.10      0.00
-50%                  NaN          1273.00     NaN          NaN             NaN            0.00           8.00       172600.00         15900.00              31.00             1.00                  0.88       6.50      0.00
-75%                  NaN          1694.00     NaN          NaN             NaN            1.00          14.00       422425.00         29900.00              59.00             2.00                  0.93       7.80      1.00
-max                  NaN          2191.00     NaN          NaN             NaN            1.00          33.00     49999000.00         92400.00             365.00             6.00                  1.00      10.00      1.00
-
-── Decisiones técnicas de limpieza ────────────────────────
-  1. ANONIMIZACIÓN
-     - Columnas PII eliminadas    : nombre, email, telefono
-     - customer_id                : hasheado con SHA-256 (16 caracteres)
-
-  2. FECHAS
-     - Formatos corruptos parseados con 5 formatos alternativos
-     - Fechas no parseables       : conservadas como NaT
-     - Columnas derivadas         : excluidas del modelo
-
-  3. NULOS
-     - Numéricas continuas        : imputadas con mediana
-     - Categóricas                : imputadas con moda
-     - Fechas NaT                 : excluidas del modelo
-
-  4. DUPLICADOS
-     - Método                     : drop_duplicates() exacto
-     - Filas eliminadas           : ~300 (3% del total)
-
-  5. OUTLIERS
-     - valor_total_6m             : 325 outliers extremos detectados
-     - Tratamiento                : conservados en dataset limpio (se
-       tratarán en feature engineering)
-
-Dataset final guardado en: 1_data\2_cleaned\05_cleaned_customers.csv
-
-```
-
-
-
+### Modelado
+| Decisión | Justificación |
+|---|---|
+| Regresión Logística | Interpretable, serializable, estándar en predicción de churn |
+| GridSearchCV 5-fold | Búsqueda exhaustiva de hiperparámetros con Cross Validation |
+| ElasticNet | Regularización flexible L1+L2 que evita el sobre ajuste del modelo |
+| scoring=Recall(pos_label=1) | El costo de no detectar un churner es mucho mayor que el costo de falso positivo (retención que no se necesita) |
+| Umbral=0.28 (sintético) | Maximiza Recall manteniendo F1 aceptable |
+| Umbral ajustado (real) | Mismo criterio — Recall >= 0.70 con mayor F1 |
+| Exportación de los pipeline a un archivo serializable (.pkl) | Permite deployment directo en SageMaker |
 
 ---
-## 🤖 Reporte de Modelado
-```
-============================================================
-REPORTE DE MODELADO — CHURN PREDICTION
-============================================================
 
-Filas cargadas  : 10,000
-Tasa de churn   : 30.83%
+## 📊 Resultados principales
 
-── Winsorización valor_total_6m ───────────────────────────
-  Percentil 99   : 34,425,300
-  Valor máximo post-winsorización: 34,425,300
+### Dataset Sintético (10.000 filas)
 
-── Features adicionales creadas ───────────────────────────
-  ratio_reclamos_envios  : reclamos / (envíos + 1)
-  segmento_recencia      : categorización de dias_ultimo_envio
-  Distribución segmento_recencia:
-segmento_recencia
-reciente     3893
-activo       2772
-en_riesgo    2099
-inactivo     1236
+**Desempeño del modelo**
 
-── Features del modelo ────────────────────────────────────
-  Numéricas   (9): ['antiguedad_dias', 'num_envios_6m', 'valor_total_6m', 'ticket_promedio', 'dias_ultimo_envio', 'num_reclamos_6m', 'tasa_entrega_exitosa', 'nps_score', 'ratio_reclamos_envios']
-  Categóricas (5): ['ciudad', 'tipo_cliente', 'canal_principal', 'tiene_contrato', 'segmento_recencia']
+| Métrica | Valor |
+|---|---|
+| Tasa de churn | 30.8% |
+| AUC-ROC | 0.7749 |
+| Recall Churn (umbral=0.28) | 0.73 |
+| Precision Churn | 0.49 |
+| F1 Churn | 0.58 |
 
-── Split train/test ───────────────────────────────────────
-  Train : 7,000 filas | churn=30.83%
-  Test  : 3,000  filas | churn=30.83%
+![Eval modelo datos sintéticos](4_outputs/synthetic_data/1_figures/02_model_evaluation.png)
 
-── Entrenando pipeline (GridSearchCV, 5-fold, scoring=recall)...
-Fitting 5 folds for each of 15 candidates, totalling 75 fits
+**Top 3 variables SHAP:**
 
-── Mejores parámetros ─────────────────────────────────────
-  C           : 1
-  l1_ratio    : 0.9
-  Recall CV (train): 0.4546
+![SHAP datos sintéticos](4_outputs/synthetic_data/1_figures/03_shap_analysis.png)
 
-── Métricas en test ───────────────────────────────────────
-  AUC-ROC : 0.7749
+1. `num_reclamos_6m` — Los reclamos son el predictor más fuerte
+2. `nps_score` — La satisfacción del cliente es clave
+3. `num_envios_6m` — La actividad reciente refleja el compromiso
 
-Matriz de confusión:
-[[1883  192]
- [ 541  384]]
-
-Classification Report:
-              precision    recall  f1-score   support
-
-      Activo       0.78      0.91      0.84      2075
-       Churn       0.67      0.42      0.51       925
-
-    accuracy                           0.76      3000
-   macro avg       0.72      0.66      0.67      3000
-weighted avg       0.74      0.76      0.74      3000
-
-
-── Búsqueda de umbral óptimo (max Recall clase Churn) ─────
-          recall  precision        f1
-umbral                               
-0.20    0.844324   0.436557  0.575534
-0.22    0.809730   0.447967  0.576819
-0.24    0.781622   0.462276  0.580956
-0.26    0.756757   0.475867  0.584307
-0.28    0.727568   0.488744  0.584709
-0.30    0.701622   0.499615  0.583633
-0.32    0.669189   0.507793  0.577425
-0.34    0.651892   0.528947  0.584019
-0.36    0.628108   0.554389  0.588951
-0.38    0.597838   0.569516  0.583333
-0.40    0.568649   0.594350  0.581215
-0.42    0.537297   0.606838  0.569954
-0.44    0.502703   0.623324  0.556553
-0.46    0.475676   0.638607  0.545229
-0.48    0.443243   0.653907  0.528351
-0.50    0.415135   0.666667  0.511659
-0.52    0.383784   0.686654  0.492372
-0.54    0.360000   0.713062  0.478448
-0.56    0.328649   0.722090  0.451709
-0.58    0.311351   0.730964  0.436694
-
-  Umbral óptimo seleccionado: 0.28
-
-── Métricas con umbral=0.28 ────────────────────
-  AUC-ROC : 0.7749
-[[1371  704]
- [ 252  673]]
-              precision    recall  f1-score   support
-
-      Activo       0.84      0.66      0.74      2075
-       Churn       0.49      0.73      0.58       925
-
-    accuracy                           0.68      3000
-   macro avg       0.67      0.69      0.66      3000
-weighted avg       0.73      0.68      0.69      3000
-
-
-── Métricas de impacto de negocio ─────────────────────────
-
+**── Métricas de impacto ────────────────────────────────────**
 ── Supuestos de negocio (configurables) ───────────────────
   LTV_PROMEDIO             : 345,200.00
   COSTO_INTERVENCION       : 15,000.00
   TASA_RETENCION           : 0.30
 
-── Métricas de impacto ────────────────────────────────────
   Clientes churn detectados (TP) : 673
   Falsos positivos (FP)          : 704
   Clientes a contactar           : 1,377
@@ -451,63 +176,138 @@ weighted avg       0.73      0.68      0.69      3000
 
   ⚠ Supuestos estimados — validar con áreas comercial y financiera para mayor precisión en métricas de negocio
 
-Gráfica guardada en: 4_outputs\1_figures\02_model_evaluation.png
+### Dataset Real (110 filas)
 
-── Pipeline guardado en: 1_data\3_features\pipeline.pkl
-  Verificación predict() desde .pkl: [0 0 0 1 0]
+**Desempeño del modelo**
 
-```
+| Métrica | Valor |
+|---|---|
+| Tasa de churn | 24.55% |
+| AUC-ROC | 0.9750 |
+| Recall Churn (umbral ajustado) | 0.88 |
 
+![Eval modelo datos reales](4_outputs/real_data/1_figures/02_model_real_evaluation.png)
+
+**Top 3 variables SHAP:**
+
+![SHAP datos reales](4_outputs/real_data/1_figures/03_shap_real.png)
+
+1. `dias_ultimo_envio` — Es el predictor más fuerte
+2. `num_envios_total` — Menor cantidad de envíos → mayor riesgo de fuga del cliente
+3. `gasto_por_envio` — Variable *Feature-engineered*: permite hacer una comparación del gasto de los clientes a escala.
+
+**── Métricas de impacto de negocio ─────────────────────────**
+
+── Supuestos de negocio (configurables) ───────────────────
+  LTV_PROMEDIO             : 10,200.00
+  COSTO_INTERVENCION       : 15,000.00
+  TASA_RETENCION           : 0.30
+
+  Clientes churn detectados (TP): 7
+  Falsos positivos (FP)          : 1
+  Costo total campaña            : $120,000 COP
+  Ingreso retenido estimado      : $20,400 COP
+  ROI estimado                   : -83.0%
+
+  ⚠ Supuestos estimados — validar con áreas comercial y financiera para mayor precisión en métricas de negocio
+
+### Recomendaciones generales para el Negocio
+
+1. Realizar estudios de mercado para detectar los principales drivers del número de reclamos y del nps_score.
+2. Aplicar modelos de lenguaje natural a las quejas registradas para detectar los principales drivers del número de reclamos y del nps_score.
+3. Materializar en base de datos el seguimiento a las características del servicio prestado por los competidores (servientrega, Coordinadora, Envía, Velotax, Envíos Verdes, Omega, Uber, Didi, entre otros). Esto con miras a fortalecer la oferta de Interrapidísimo hacia cada segmento de clientes (envío ocasional de persona natural, envíos del segmento e-commerce, envíos de fabricantes de mercancías, etc), mejorando el número de envíos.
 
 ---
-## 🔍 Reporte valores SHAP (SHapley Additive exPlanations)
-```
-============================================================
-REPORTE DE ANÁLISIS VALORES SHAP (SHapley Additive exPlanations)
-============================================================
 
-Pipeline cargado desde: 1_data\3_features\pipeline.pkl
+## 🏗️ Arquitectura AWS
 
-Features tras preprocesamiento : 27
-  Categóricas (OHE) : 18
-  Numéricas         : 9
+El diagrama conceptual ilustra el flujo completo para un escenario
+de **millones de registros de clientes utilizando contenedores Docker**:
 
-Mejores parámetros:
-  C           : 1
-  l1_ratio    : 0.9
+![Arquitectura AWS](4_outputs/synthetic_data/1_figures/04_aws_architecture.png)
 
-SHAP values calculados sobre muestra de 1.000 filas
+**Componentes:**
+- **S3** — Data Lake con capas RAW / CLEANED / FEATURES (Parquet particionado)
+- **AWS Glue** — ETL con workers escalables G.2X para realizar transformaciones a millones de filas de manera automática.
+- **Amazon ECR** — Repositorio de imágenes Docker versionadas para el reparto de las cargas de trabajo
+- **SageMaker** — Manejo versionado y con directrices de gobernanza de modelos de Machine Learning, a través de Pipelines + Training Job + Clarify (SHAP) + Model Registry
+- **Batch Transform** — Scoring masivo sobre millones de registros
+- **CloudWatch** — Monitoreo de drift de datos y de métricas del modelo -> da la pauta para determinar necesidades de reentrenamiento del modelo.
+- **IAM + VPC + CloudTrail** — Estándares de Seguridad y gobernanza (Encriptación, roles con principio de mínimo privilegio, tags para seguimiento a consola de costos por componente de nube [FINOPS])
 
-── Top 15 variables por importancia SHAP ──────────────────
-                         feature  mean_shap
-0                num_reclamos_6m   0.568656
-1                      nps_score   0.441735
-2                  num_envios_6m   0.427061
-3              dias_ultimo_envio   0.421765
-4           tasa_entrega_exitosa   0.335237
-5               tiene_contrato_1   0.271777
-6           tipo_cliente_Natural   0.099405
-7            canal_principal_App   0.086689
-8            canal_principal_Web   0.062561
-9           tipo_cliente_Empresa   0.050353
-10    segmento_recencia_inactivo   0.049523
-11   segmento_recencia_en_riesgo   0.034924
-12               antiguedad_dias   0.032120
-13  canal_principal_Punto físico   0.029333
-14               ciudad_Medellín   0.020455
+---
 
-Gráfica guardada en: 4_outputs\1_figures\03_shap_analysis.png
+## 📋 Diccionario de Datos
 
-── Interpretación de resultados ───────────────────────────
-  Las 3 variables más influyentes en la predicción de churn:
-  1. num_reclamos_6m                     mean|SHAP|=0.5687
-  2. nps_score                           mean|SHAP|=0.4417
-  3. num_envios_6m                       mean|SHAP|=0.4271
+### Dataset Sintético — `raw_data_customers.csv`
 
-  Interpretación general:
-  - Valores SHAP positivos → aumentan la probabilidad de churn
-  - Valores SHAP negativos → disminuyen la probabilidad de churn
-  - mean|SHAP| alto → variable muy influyente en la explicabilidad del modelo
+| # | Variable | Tipo | Descripción | Variable sensible PII | Tratamiento |
+|---|---|---|---|---|---|
+| 1 | `customer_id` | string | Identificador único | ⚠️ Sí | Hasheado SHA-256 |
+| 2 | `nombre` | string | Nombre completo | ⚠️ Sí | Eliminado |
+| 3 | `email` | string | Correo electrónico | ⚠️ Sí | Eliminado |
+| 4 | `telefono` | string | Teléfono | ⚠️ Sí | Eliminado |
+| 5 | `fecha_registro` | string | Fecha de registro | No | Parseada multi-formato |
+| 6 | `antiguedad_dias` | numérico | Días como cliente | No | Imputado mediana |
+| 7 | `ciudad` | categórico | Ciudad de origen | No | Imputado moda |
+| 8 | `tipo_cliente` | categórico | Natural/Empresa/Ecommerce | No | Imputado moda |
+| 9 | `canal_principal` | categórico | App/Web/Punto físico/API | No | Imputado moda |
+| 10 | `tiene_contrato` | binario | Contrato corporativo | No | Sin imputación |
+| 11 | `num_envios_6m` | numérico | Envíos últimos 6 meses | No | Imputado mediana |
+| 12 | `valor_total_6m` | numérico | Valor facturado 6 meses (COP) | No | Mediana + Winsorización p99 |
+| 13 | `ticket_promedio` | numérico | Valor promedio por envío | No | Imputado mediana |
+| 14 | `dias_ultimo_envio` | numérico | Días desde último envío | No | Imputado mediana |
+| 15 | `num_reclamos_6m` | numérico | Reclamos últimos 6 meses | No | Imputado mediana |
+| 16 | `tasa_entrega_exitosa` | numérico | % envíos exitosos | No | Imputado mediana |
+| 17 | `nps_score` | numérico | Net Promoter Score | No | Imputado mediana |
+| 18 | `churn` | binario | Variable objetivo | No | Target |
 
+### Dataset Real — `raw_data_customers_lpgr.csv`
 
-```
+| # | Variable original | Variable limpia | Tipo | Tratamiento |
+|---|---|---|---|---|
+| 1 | `customer_id` | `customer_id` | string | Hasheado SHA-256 |
+| 2 | `full_name` | — | string | Eliminado (PII) |
+| 3 | `email` | — | string | Eliminado (PII) |
+| 4 | `phone` | — | string | Eliminado (PII) |
+| 5 | `home_address` | — | string | Eliminado (PII) |
+| 6 | `signup_date` | `fecha_registro` | fecha | Parseada multi-formato |
+| 7 | `last_purchase_date` | `fecha_ultimo_envio` | fecha | Parseada multi-formato |
+| 8 | `monthly_spend` | `valor_mensual` | numérico | Negativos→NaN, Winsorización p99 |
+| 9 | `total_shipments` | `num_envios_total` | numérico | Winsorización p99 |
+| 10 | `churn_label` | `churn` | binario | Target |
+
+---
+
+## 🔒 Estándares AWS Aplicados
+
+- **IAM**: roles con principio de mínimo privilegio por servicio
+- **S3**: encriptación SSE-S3 en reposo, TLS en tránsito
+- **VPC + PrivateLink**: tráfico interno sin exposición a internet
+- **CloudTrail**: auditoría completa de accesos y cambios
+- **ECR**: imágenes Docker versionadas con escaneo de vulnerabilidades
+- **SageMaker Model Monitor**: detección automática de data drift y model drift
+- **CloudWatch Alarms + SNS**: alertas automáticas al equipo de ML
+
+De acuerdo con los principios FINOPS, se recomienda disminuir en lo posible los costos de almacenamiento en contenedores S3 que es uno de los componentes de mayro costo, en favor de la optimización de las capacidades de cómputo (Sagemaker). Adicionalmente, se recomienda realiza un análisis de costo beneficio para los tipos de procesamiento entre Cloud y On-premise.
+---
+### 📊 Reportes detallados  — Datos sintéticos (10.000 filas)
+
+Disponibles en la subcarpeta `4_outputs/synthetic_data/2_metrics`, a saber:
+
+- 01_quality_report
+- 02_anonymization_report
+- 03_date_cleaning_report
+- 04_imputation_report
+- 05_cleaned_layer_report
+- 06_model_report
+- 07_shap_report
+
+---
+### 📊 Reportes detallados  — Datos reales (110 filas)
+
+Disponibles en la subcarpeta `4_outputs/real_data/2_metrics`, a saber:
+
+- 01_clean_real_report
+- 02_model_real_report
+- 03_shap_real_report

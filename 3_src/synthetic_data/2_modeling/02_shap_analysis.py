@@ -14,10 +14,10 @@ import sys
 from pathlib import Path
 
 # ── Configuración ─────────────────────────────────────────────────────────────
-INPUT_PATH   = Path("1_data/2_cleaned/05_cleaned_customers.csv")
-MODEL_PATH   = Path("1_data/3_features/pipeline.pkl")
-FIG_PATH     = Path("4_outputs/1_figures")
-METRICS_PATH = Path("4_outputs/2_metrics")
+INPUT_PATH   = Path("1_data\synthetic_data\2_cleaned\05_cleaned_customers.csv")
+MODEL_PATH   = Path("1_data\synthetic_data\3_features\pipeline.pkl")
+FIG_PATH     = Path("4_outputs\synthetic_data\1_figures")
+METRICS_PATH = Path("4_outputs\synthetic_data\2_metrics")
 
 METRICS_PATH.mkdir(parents=True, exist_ok=True)
 FIG_PATH.mkdir(parents=True, exist_ok=True)

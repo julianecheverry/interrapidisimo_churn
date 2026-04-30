@@ -15,7 +15,7 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import FancyBboxPatch
 from pathlib import Path
 
-FIG_PATH = Path("4_outputs/1_figures")
+FIG_PATH = Path("4_outputs\synthetic_data\1_figures")
 FIG_PATH.mkdir(parents=True, exist_ok=True)
 
 # ── Colores AWS ───────────────────────────────────────────────────────────────

@@ -29,10 +29,10 @@ from sklearn.metrics import (
 )
 
 # ── Configuración ─────────────────────────────────────────────────────────────
-INPUT_PATH   = Path("1_data/2_cleaned/05_cleaned_customers.csv")
-MODEL_PATH   = Path("1_data/3_features/pipeline.pkl")
-METRICS_PATH = Path("4_outputs/2_metrics")
-FIG_PATH     = Path("4_outputs/1_figures")
+INPUT_PATH   = Path("1_data/synthetic_data/2_cleaned/05_cleaned_customers.csv")
+MODEL_PATH   = Path("1_data/synthetic_data/3_features/pipeline.pkl")
+METRICS_PATH = Path("4_outputs/synthetic_data/2_metrics")
+FIG_PATH     = Path("4_outputs/synthetic_data/1_figures")
 
 MODEL_PATH.parent.mkdir(parents=True, exist_ok=True)
 METRICS_PATH.mkdir(parents=True, exist_ok=True)

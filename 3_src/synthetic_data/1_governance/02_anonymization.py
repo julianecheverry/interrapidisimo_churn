@@ -12,11 +12,11 @@ import sys
 from pathlib import Path
 
 # ── Configuración ─────────────────────────────────────────────────────────────
-INPUT_PATH  = Path("1_data/1_raw/raw_data_customers.csv")
-OUTPUT_PATH = Path("1_data/2_cleaned/02_anonymized.csv")
+INPUT_PATH  = Path("1_data/synthetic_data/1_raw/raw_data_customers.csv")
+OUTPUT_PATH = Path("1_data/synthetic_data/2_cleaned/02_anonymized.csv")
 OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
 
-METRICS_PATH = Path("4_outputs/2_metrics")
+METRICS_PATH = Path("4_outputs/synthetic_data/2_metrics")
 METRICS_PATH.mkdir(parents=True, exist_ok=True)
 
 # ── Captura de resultados en archivo .txt ────────────────────────────────────────────

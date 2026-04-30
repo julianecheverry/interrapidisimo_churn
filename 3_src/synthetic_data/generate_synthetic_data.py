@@ -18,7 +18,7 @@ from pathlib import Path
 # ── Configuración ─────────────────────────────────────────────────────────────
 SEED        = 42
 N           = 10_000
-OUTPUT_PATH = Path("1_data/1_raw/raw_data_customers.csv")
+OUTPUT_PATH = Path("1_data\synthetic_data\1_raw\raw_data_customers.csv")
 
 rng  = np.random.default_rng(SEED)
 fake = Faker("es_CO")

@@ -12,7 +12,7 @@ from pathlib import Path
 # ── Imprimir y guardar informe de resultados en archivo txt ───────────────────────
 import sys
 
-METRICS_PATH = Path("4_outputs/2_metrics")
+METRICS_PATH = Path("4_outputs/synthetic_data/2_metrics")
 METRICS_PATH.mkdir(parents=True, exist_ok=True)
 
 class Tee:
@@ -31,8 +31,8 @@ report_file = open(METRICS_PATH / "01_quality_report.txt", "w", encoding="utf-8"
 sys.stdout = Tee(sys.stdout, report_file)
 
 # ── Configuración ─────────────────────────────────────────────────────────────
-INPUT_PATH  = Path("1_data/1_raw/raw_data_customers.csv")
-FIG_PATH    = Path("4_outputs/1_figures")
+INPUT_PATH  = Path("1_data/synthetic_data/1_raw/raw_data_customers.csv")
+FIG_PATH    = Path("4_outputs/synthetic_data/1_figures")
 FIG_PATH.mkdir(parents=True, exist_ok=True)
 
 # ── 1. Carga ──────────────────────────────────────────────────────────────────
